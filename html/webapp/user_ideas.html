@@ -1,0 +1,86 @@
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li><a href="#tab1" data-toggle="tab">All ideas</a></li>
+    <li class="active"><a href="#tab2" data-toggle="tab">My ideas</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane" id="tab1">
+      <p>
+        {% if ideas %}
+        {% for idea in ideas %}
+        <div class="row">
+          <div class="span1" align="center">
+            <!-- Votes -->
+            <a href="/webapp/idea/{{ idea.id }}/up"><i class="icon-thumbs-up"></i></button></a><br>
+            {% if idea.votes > 0 %}
+            <span class="badge badge-success">{{ idea.votes }}</span><br>
+            {% elif idea.votes == 0 %}
+            <span class="badge badge-warning">{{ idea.votes }}</span><br>
+            {% else %}
+            <span class="badge badge-important">{{ idea.votes }}</span><br>
+            {% endif %}
+            <a href="/webapp/idea/{{ idea.id }}/down"><i class="icon-thumbs-down"></i><br></a>
+          </div>
+
+          <!-- IDEA -->
+          <div class="span6" id="idea{{ idea.id }}"><a href="#"><strong>{{ idea.title }}</strong></a>{% if username == idea.user.username %}<div class="pull-right"><a href="/webapp/idea/{{ idea.id }}/delete">x</a></div>{% endif %}
+          <br><small>{{ idea.desc }}</small><br>
+          {% if idea.get_tag_list %}
+          {% for tag in idea.get_tag_list %}
+          <a href="#"><span class="label label-info">{{ tag }}</a></span>
+          {% endfor %}
+          {% else %}
+          <span class="label">No tags.</span>
+          {% endif %}
+          <div class="pull-right"><small>{{ idea.pub_date }} <strong><a href="#">{{ idea.user.username }}</strong></small></a></div>
+        </div>
+      </div>
+      <hr>
+    </p>
+    {% endfor %}
+
+    {% else %}
+    <h1>No ideas :(</h2>
+      {% endif %}
+    </div>
+    <div class="tab-pane active" id="tab2">
+      <p>
+        {% if ideas %}
+        {% for idea in ideas %}
+        {% if idea.user.username == username %}
+        <div class="row">
+          <div class="span1" align="center">
+            <!-- Votes -->
+            <a href="/webapp/idea/{{ idea.id }}/up"><i class="icon-thumbs-up"></i></button></a><br>
+            {% if idea.votes > 0 %}
+            <span class="badge badge-success">{{ idea.votes }}</span><br>
+            {% elif idea.votes == 0 %}
+            <span class="badge badge-warning">{{ idea.votes }}</span><br>
+            {% else %}
+            <span class="badge badge-important">{{ idea.votes }}</span><br>
+            {% endif %}
+            <a href="/webapp/idea/{{ idea.id }}/down"><i class="icon-thumbs-down"></i><br></a>
+          </div>
+
+          <!-- IDEA -->
+          <div class="span6" id="idea{{ idea.id }}"><a href="#"><strong>{{ idea.title }}</strong></a>{% if username == idea.user.username %}<div class="pull-right"><a href="/webapp/idea/{{ idea.id }}/delete">x</a></div>{% endif %}
+          <br><small>{{ idea.desc }}</small><br>
+          {% if idea.get_tag_list %}
+          {% for tag in idea.get_tag_list %}
+          <a href="#"><span class="label label-info">{{ tag }}</a></span>
+          {% endfor %}
+          {% else %}
+          <span class="label">No tags.</span>
+          {% endif %}
+          <div class="pull-right"><small>{{ idea.pub_date }} <strong><a href="#">{{ idea.user.username }}</strong></small></a></div>
+        </div>
+      </div>
+      <hr>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      
+    </p>
+  </div>
+</div>
+</div>
